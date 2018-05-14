@@ -20,7 +20,9 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-var net = require('net');
+// var net = require('net');
+const net = require('react-native-tcp');
+const hrtime = require('browser-process-hrtime');
 
 var ping = function(options, callback) {
     var i = 0;
@@ -58,9 +60,9 @@ var ping = function(options, callback) {
 
     var connect = function(options, callback) {
         var s = new net.Socket();
-        var start = process.hrtime();
+        var start = hrtime();
         s.connect(options.port, options.address, function() {
-            var time_arr = process.hrtime(start);
+            var time_arr = hrtime(start);
             var time = (time_arr[0] * 1e9 + time_arr[1]) / 1e6;
             results.push({ seq: i, time: time });
             s.destroy();
